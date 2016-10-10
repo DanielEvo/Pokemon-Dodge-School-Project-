@@ -1,4 +1,0 @@
-1) image = sprite.get_image(422,3,41,71)
-2) image = sprite.get_image(473,10,49,65)
-3) image = sprite.get_image(531,3,57,71)
-4) image = sprite.get_image(596,13,53,62)
