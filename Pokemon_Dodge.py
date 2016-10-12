@@ -18,6 +18,7 @@ red = (255,0,0)
 '''seta listas'''
 pikalist=[]
 diglist=[]
+
     
 def score_count(count):
     font = pygame.font.Font(None, 25)
@@ -48,7 +49,26 @@ def crash():
     image = pygame.transform.scale(pikafainted, (1000, 600))
     gameDisplay.blit(image,(0,0))
     message_display('You are Fainted')
+
+def inicial():
+
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf',110) 
+        TextSurf, TextRect = text_objects("Pokemon Dodge", largeText)
+        TextRect.center = ((display_w/2),(display_h/2))
+        gameDisplay.blit(TextSurf, TextRect)
+        pygame.display.update()
+        clock.tick(15)
     
+        
 def game_loop():
 
     x = (481)
@@ -107,54 +127,47 @@ def game_loop():
 
     # Inicializa o joystick
     pygame.joystick.init()
-    joystick = pygame.joystick.Joystick(0)
-    joystick.init()
+    if pygame.joystick.get_count() > 0:
+        joystick = pygame.joystick.Joystick(0)
+        joystick.init()
 
  
     while not gameExit:
 
-
-        
-
-
-
-        # Recebe valor real entre (-1) e (1) para o analógico esquerdo no eixo horizontal, onde (0) é parado
-        axis_lh = joystick.get_axis(0)
-        # Recebe valor real entre (-1) e (1) para o analógico esquerdo no eixo vertical, onde (0) é parado
-        axis_lv = joystick.get_axis(1)
-                
-        # Recebe valor inteiro de (-1) e (1) para os botões direcionais, onde (0) é parado
-        hat = joystick.get_hat(0)
-                
-        # Mapa de botões, recebem valor booleano quando pressionados
-        button_square = joystick.get_button(3)
-        button_x = joystick.get_button(2)
-        button_circle = joystick.get_button(1)
-        button_triangle = joystick.get_button(0)
-        button_L1 = joystick.get_button(4)
-        button_R1 = joystick.get_button(5)
-        button_L2 = joystick.get_button(6)
-        button_R2 = joystick.get_button(7)
-        button_start = joystick.get_button(9)
+        if pygame.joystick.get_count() > 0:
+            # Recebe valor real entre (-1) e (1) para o analógico esquerdo no eixo horizontal, onde (0) é parado
+            axis_lh = joystick.get_axis(0)
+            # Recebe valor real entre (-1) e (1) para o analógico esquerdo no eixo vertical, onde (0) é parado
+            axis_lv = joystick.get_axis(1)
+                    
+            # Recebe valor inteiro de (-1) e (1) para os botões direcionais, onde (0) é parado
+            hat = joystick.get_hat(0)
+                    
+            # Mapa de botões, recebem valor booleano quando pressionados
+            button_square = joystick.get_button(3)
+            button_x = joystick.get_button(2)
+            button_circle = joystick.get_button(1)
+            button_triangle = joystick.get_button(0)
+            button_L1 = joystick.get_button(4)
+            button_R1 = joystick.get_button(5)
+            button_L2 = joystick.get_button(6)
+            button_R2 = joystick.get_button(7)
+            button_start = joystick.get_button(9)
 
 
         
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if button_L1 and x > 481:
-                x = x_change[1]
-            elif button_L1 and x == 481:
-                x = x_change[0]
-            elif button_R1 and x < 481:
-                x = x_change[1]
-            elif button_R1 and x == 481:
-                x = x_change[2]
-
-
-
-
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if button_L1 and x > 481:
+                    x = x_change[1]
+                elif button_L1 and x == 481:
+                    x = x_change[0]
+                elif button_R1 and x < 481:
+                    x = x_change[1]
+                elif button_R1 and x == 481:
+                    x = x_change[2]
 
                 
         for event in pygame.event.get():
@@ -223,10 +236,9 @@ def game_loop():
             if x > thing_startx and x < thing_startx + thing_width or x+50 > thing_startx and x+50 < thing_startx + thing_width:
                 print('x crossover')
                 crash()
-                
-                
-
+    
         clock.tick(100)
         pygame.display.flip()
-        
+
+inicial()
 game_loop()
