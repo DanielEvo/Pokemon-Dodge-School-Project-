@@ -1,6 +1,4 @@
 # Pokemon-Dodge-School-Project-
-Pokemon Dodge is an action game which mechanics are similar to Minion Rush game, where you must drive your Pokemon through an infinite map, trying constantly to dodge obstacles and other danger that will appear in the way.
+Pokemon Dodge is an action game which mechanics are similar to Minion Rush game, where you must drive your Pokemon through an infinite map, trying constantly to dodge obstacles that appear in the way.
 
-Currently the code is still represented by black blocks that fall randomly the screen, in which you have to dodge to an object (red car).
-The game_intro() method was created and is described in the penultimate line of code not working yet.
-The next step is to create an array with 3 positions for restricted movement of objects.
+Currently the code is ready to presentation. For the future, some features will be added, as play against a Boss, the possibility of choosing more than one pokemon to run with, the recording of scores and also the creation of different levels and difficulties.
