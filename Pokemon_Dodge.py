@@ -1,5 +1,6 @@
 import pygame
 import time
+import mixer
 import random
 from ClassSpriteSheet import SpriteSheet
 
@@ -29,10 +30,10 @@ def things(thingX, thingY, thingW, thingH, color):
     pygame.draw.rect(gameDisplay, color, [thingX, thingY, thingW, thingH])
 
 def text_objects(text,font):
-    textSurface = font.render(text,True,red)
+    textSurface = font.render(text,True,black)
     return textSurface, textSurface.get_rect()
 
-def message_display(text):
+def gameover(text):
     largeText = pygame.font.Font('freesansbold.ttf',110) 
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((display_w/2),(display_h/2))
@@ -40,35 +41,56 @@ def message_display(text):
 
     pygame.display.update()
     
-    time.sleep(2)                                                           #tempo em segundos
+    time.sleep(2)
 
     game_loop()
-
+    
 def crash():
+    mixer.music.load("Pokemon_End.wav")
+    mixer.music.play(-1,0.0)    
     pikafainted = pygame.image.load('pika_fainted.png')
     image = pygame.transform.scale(pikafainted, (1000, 600))
     gameDisplay.blit(image,(0,0))
-    message_display('You are Fainted')
+    gameover('You are Fainted')
+
+def message_init(text):
+    largeText = pygame.font.Font('freesansbold.ttf',17) 
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((display_w/2),(510))
+    gameDisplay.blit(TextSurf, TextRect)
+
+    pygame.display.update()
 
 def inicial():
 
     intro = True
-
+    mixer.music.load("Pokemon_Init1.wav")
+    mixer.music.play(-1,0.0)
     while intro:
         for event in pygame.event.get():
+            print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-        gameDisplay.fill(white)
-        largeText = pygame.font.Font('freesansbold.ttf',110) 
-        TextSurf, TextRect = text_objects("Pokemon Dodge", largeText)
-        TextRect.center = ((display_w/2),(display_h/2))
-        gameDisplay.blit(TextSurf, TextRect)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or pygame.K_KP_ENTER:
+                    print("ok")
+                    intro = False
+
+        gamecover = pygame.image.load('game_cover.png')
+        cover = pygame.transform.scale(gamecover, (1000, 600))
+        gameDisplay.blit(cover,(0,0))
+        message_init('Press and hold ENTER to start')
+        time.sleep(0.25)
+        gameDisplay.blit(cover,(0,0))
+        message_init('                    ')
+        time.sleep(0.25)
         pygame.display.update()
-        clock.tick(15)
+
+    mixer.music.load("Pokemon_Enter.wav")
+    mixer.music.play(-1,0.0)    
+    game_loop()
     
-        
 def game_loop():
 
     x = (481)
@@ -122,16 +144,17 @@ def game_loop():
     image = sprite.get_image(1588,510,832,6401,0)
     backgnd1 = pygame.transform.scale(image, (1000, 6400))
     backgnd2 = pygame.transform.scale(image, (1000, 6400))
-
-   
-
+    
+    mixer.music.load("Pokemon_Game.wav")
+    mixer.music.play(-1,0.0)
+    
     # Inicializa o joystick
     pygame.joystick.init()
     if pygame.joystick.get_count() > 0:
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
- 
+     
     while not gameExit:
 
         if pygame.joystick.get_count() > 0:
